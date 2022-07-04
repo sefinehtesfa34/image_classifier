@@ -23,5 +23,22 @@ PIL.Image.open(str(roses[1]))
 batch_size = 32
 img_height = 180
 img_width = 180
+# It's good practice to use a validation split when developing your model. 
+# Here I will use 80% of the images for training and 20% for validation.
+train_ds = tf.keras.utils.image_dataset_from_directory(
+  data_dir,
+  validation_split=0.2,
+  subset="training",
+  seed=123,
+  image_size=(img_height, img_width),
+  batch_size=batch_size)
+val_ds = tf.keras.utils.image_dataset_from_directory(
+  data_dir,
+  validation_split=0.2,
+  subset="validation",
+  seed=123,
+  image_size=(img_height, img_width),
+  batch_size=batch_size)
+
 
 
