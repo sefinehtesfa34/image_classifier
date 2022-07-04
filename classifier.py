@@ -39,6 +39,24 @@ val_ds = tf.keras.utils.image_dataset_from_directory(
   seed=123,
   image_size=(img_height, img_width),
   batch_size=batch_size)
+# You can find the class names in the `class_names` attribute on these datasets.
+
+class_names = train_ds.class_names
+print(class_names)
+### Visualize the data
+
+# Here are the first nine images from the training dataset.
+
+plt.figure(figsize=(10, 10))
+for images, labels in train_ds.take(1):
+  for i in range(9):
+    ax = plt.subplot(3, 3, i + 1)
+    plt.imshow(images[i].numpy().astype("uint8"))
+    plt.title(class_names[labels[i]])
+    plt.axis("off")
+
+
+
 
 
 
