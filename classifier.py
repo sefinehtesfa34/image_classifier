@@ -112,6 +112,11 @@ model = tf.keras.Sequential([
   tf.keras.layers.Dense(128, activation='relu'),
   tf.keras.layers.Dense(num_classes)
 ])
+model.compile(
+  optimizer='adam',
+  loss=tf.losses.SparseCategoricalCrossentropy(from_logits=True),
+  metrics=['accuracy'])
+
 
 
 
