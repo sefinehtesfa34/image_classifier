@@ -67,6 +67,13 @@ for image_batch, labels_batch in train_ds:
 # You can call .numpy() on either of these tensors to convert them to a numpy.ndarray.
 # Standardize the data
 normalization_layer = tf.keras.layers.Rescaling(1./255)
+# There are two ways to use this layer. You can apply it to the dataset by calling `Dataset.map`:
+normalized_ds = train_ds.map(lambda x, y: (normalization_layer(x), y))
+image_batch, labels_batch = next(iter(normalized_ds))
+first_image = image_batch[0]
+# Notice the pixel values are now in `[0,1]`.
+print(np.min(first_image), np.max(first_image))
+
 
 
 
