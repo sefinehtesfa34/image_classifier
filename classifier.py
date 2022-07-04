@@ -116,6 +116,11 @@ model.compile(
   optimizer='adam',
   loss=tf.losses.SparseCategoricalCrossentropy(from_logits=True),
   metrics=['accuracy'])
+model.fit(
+  train_ds,
+  validation_data=val_ds,
+  epochs=3
+)
 
 
 
