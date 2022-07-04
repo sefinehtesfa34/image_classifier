@@ -74,9 +74,41 @@ first_image = image_batch[0]
 # Notice the pixel values are now in `[0,1]`.
 print(np.min(first_image), np.max(first_image))
 
+# Or, you can include the layer inside 
+# your model definition to simplify deployment. 
+# You will use the second approach here.
+
+# Note: If you would like to scale pixel values to `[-1,1]` 
+# you can instead write `tf.keras.layers.Rescaling(1./127.5, offset=-1)`
+
+# Note: You previously resized images using the `image_size` argument of `tf.keras.utils.image_dataset_from_directory`. 
+# If you want to include the resizing logic in your model as well, 
+# you can use the `tf.keras.layers.Resizing` layer.
+
+# Configure the dataset for performance
+# Let's make sure to use buffered prefetching so you can yield data from disk without having I/O become blocking. These are two important methods you should use when loading data:
+
+# Dataset.cache keeps the images in memory after they're loaded off disk during the first epoch. This will ensure the dataset does not become a bottleneck while training your model. If your dataset is too large to fit into memory, you can also use this method to create a performant on-disk cache.
+# Dataset.prefetch overlaps data preprocessing and model execution while training.
 
 
 
+AUTOTUNE = tf.data.AUTOTUNE
 
+train_ds = train_ds.cache().prefetch(buffer_size=AUTOTUNE)
+val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
+num_classes = 5
 
+model = tf.keras.Sequential([
+  tf.keras.layers.Rescaling(1./255),
+  tf.keras.layers.Conv2D(32, 3, activation='relu'),
+  tf.keras.layers.MaxPooling2D(),
+  tf.keras.layers.Conv2D(32, 3, activation='relu'),
+  tf.keras.layers.MaxPooling2D(),
+  tf.keras.layers.Conv2D(32, 3, activation='relu'),
+  tf.keras.layers.MaxPooling2D(),
+  tf.keras.layers.Flatten(),
+  tf.keras.layers.Dense(128, activation='relu'),
+  tf.keras.layers.Dense(num_classes)
+])
