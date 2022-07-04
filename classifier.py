@@ -14,4 +14,7 @@ data_dir = tf.keras.utils.get_file(origin=dataset_url,
 data_dir = pathlib.Path(data_dir)
 image_count = len(list(data_dir.glob('*/*.jpg')))
 print(image_count)
+# Let's visualize an image
+roses = list(data_dir.glob('roses/*'))
+PIL.Image.open(str(roses[0]))
 
