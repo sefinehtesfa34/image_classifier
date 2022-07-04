@@ -17,4 +17,11 @@ print(image_count)
 # Let's visualize an image
 roses = list(data_dir.glob('roses/*'))
 PIL.Image.open(str(roses[0]))
+roses = list(data_dir.glob('roses/*'))
+PIL.Image.open(str(roses[1]))
+
+batch_size = 32
+img_height = 180
+img_width = 180
+
 
