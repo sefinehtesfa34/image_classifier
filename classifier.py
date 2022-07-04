@@ -65,7 +65,8 @@ for image_batch, labels_batch in train_ds:
 # The label_batch is a tensor of the shape (32,), 
 # these are corresponding labels to the 32 images.
 # You can call .numpy() on either of these tensors to convert them to a numpy.ndarray.
-
+# Standardize the data
+normalization_layer = tf.keras.layers.Rescaling(1./255)
 
 
 
