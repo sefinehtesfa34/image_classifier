@@ -54,6 +54,18 @@ for images, labels in train_ds.take(1):
     plt.imshow(images[i].numpy().astype("uint8"))
     plt.title(class_names[labels[i]])
     plt.axis("off")
+# You can train a model using these datasets by passing them to model.fit (shown later in this tutorial). 
+# If you like, you can also manually iterate over the dataset and retrieve batches of images:
+for image_batch, labels_batch in train_ds:
+  print(image_batch.shape)
+  print(labels_batch.shape)
+  break
+# The image_batch is a tensor of the shape (32, 180, 180, 3). 
+# This is a batch of 32 images of shape 180x180x3 (the last dimension refers to color channels RGB). 
+# The label_batch is a tensor of the shape (32,), 
+# these are corresponding labels to the 32 images.
+# You can call .numpy() on either of these tensors to convert them to a numpy.ndarray.
+
 
 
 
